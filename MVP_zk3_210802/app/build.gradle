@@ -1,0 +1,87 @@
+plugins {
+    id 'com.android.application'
+}
+
+android {
+    compileSdkVersion 30
+    buildToolsVersion "30.0.3"
+
+    defaultConfig {
+        applicationId "com.study.mvp_zk3_210802"
+        minSdkVersion 24
+        targetSdkVersion 30
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments = [AROUTER_MODULE_NAME: project.getName()]
+            }
+        }
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+}
+
+dependencies {
+
+    implementation 'androidx.appcompat:appcompat:1.2.0'
+    implementation 'com.google.android.material:material:1.2.1'
+    implementation 'androidx.constraintlayout:constraintlayout:2.0.1'
+    implementation project(path: ':MyBase')
+    testImplementation 'junit:junit:4.+'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.2'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
+
+    //工具类
+    implementation 'com.blankj:utilcode:1.30.6'
+
+    //网络框架 okhttp
+    implementation 'com.squareup.okhttp3:okhttp:3.12.1'
+
+    //日志拦截器
+    implementation 'com.squareup.okhttp3:logging-interceptor:3.11.0'
+
+    //Gson
+    implementation 'com.google.code.gson:gson:2.8.0'
+
+    //Glide图片框架
+    implementation 'com.github.bumptech.glide:glide:4.12.0'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.12.0'
+
+    //刷新核心必须依赖
+    implementation 'com.scwang.smart:refresh-layout-kernel:2.0.3'
+
+    //经典刷新头
+    implementation 'com.scwang.smart:refresh-header-classics:2.0.3'
+
+    implementation ('com.alibaba:arouter-api:1.5.2') //ARouter依赖
+    annotationProcessor 'com.alibaba:arouter-compiler:1.5.2' //ARouter依赖
+
+    //retrofit2
+    implementation 'com.squareup.retrofit2:converter-gson:2.4.0'
+    //Gson converter gson解析
+    implementation 'com.squareup.retrofit2:converter-gson:2.4.0'
+    //RxJava2 Adapter
+    implementation "com.squareup.retrofit2:adapter-rxjava2:2.3.0"
+
+    //RxJava依赖
+    implementation 'io.reactivex.rxjava2:rxjava:2.2.6'
+    implementation 'io.reactivex.rxjava2:rxandroid:2.1.0'
+
+    //RecyclerView
+    implementation 'com.google.android.material:material:1.1.0'
+
+    //万能适配器
+    implementation 'com.github.CymChad:BaseRecyclerViewAdapterHelper:3.0.0'
+}
