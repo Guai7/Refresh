@@ -1,13 +1,15 @@
 package com.study.mvp_zk3_210802.mvp.adapter;
 
+import androidx.annotation.Nullable;
+
 import com.chad.library.adapter.base.BaseMultiItemQuickAdapter;
 import com.chad.library.adapter.base.viewholder.BaseViewHolder;
 import com.study.mvp_zk3_210802.R;
 import com.study.mvp_zk3_210802.mvp.entity.FoodEntity;
 import com.study.mvp_zk3_210802.mvp.utils.GlideUtils;
 
+
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 

@@ -168,7 +168,7 @@ public class MainActivity extends BaseActivity implements IContract.IFoodView, O
      * @param position
      */
     @Override
-    public void onItemClick(@NonNull @NotNull BaseQuickAdapter<?, ?> adapter, @NonNull @NotNull View view, int position) {
+    public void onItemClick(@NonNull @NotNull BaseQuickAdapter adapter, @NonNull @NotNull View view, int position) {
         //使用ARouter跳转并传值（跳转到详情页）
         ARouter.getInstance().build("/test/details")
                 .withSerializable("object",dataBeans.get(position))
@@ -189,4 +189,5 @@ public class MainActivity extends BaseActivity implements IContract.IFoodView, O
         showToast("删除成功");
         return true;
     }
+
 }

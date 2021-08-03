@@ -40,7 +40,7 @@ class FoodPresenter extends BasePresenter<IContract.IFoodView, IContract.IFoodMo
 
             @Override
             public void onComplete() {
-                disposable.dispose();       //方法执行完毕后 断开连接
+//                disposable.dispose();       //方法执行完毕后 断开连接
             }
         });
     }

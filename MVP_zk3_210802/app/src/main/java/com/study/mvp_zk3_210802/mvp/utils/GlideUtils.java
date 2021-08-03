@@ -44,9 +44,9 @@ class GlideUtils {
             Glide.with(context)
                     .load(url)
 //                    .skipMemoryCache(true)      //禁用内存缓存
-                    .diskCacheStrategy(DiskCacheStrategy.RESOURCE)  //缓存方式： 缓存转换后的图片（圆形...）
+                    .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)  //缓存方式： 自适应
                     .error(R.drawable.ic_launcher_background)
-                    .placeholder(R.drawable.ic_launcher_background)
+//                    .placeholder(R.drawable.ic_launcher_background)
                     .transform(new RoundedCorners(50))
                     .into(view);
         }else {
