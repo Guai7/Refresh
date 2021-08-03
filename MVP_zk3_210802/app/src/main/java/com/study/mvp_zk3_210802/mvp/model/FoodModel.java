@@ -13,7 +13,7 @@ import io.reactivex.schedulers.Schedulers;
 public
 class FoodModel extends BaseModel implements IContract.IFoodModel {
 
-
+    //获取数据 网络请求的方法 调用Retrofit中的单例方法 实现API.class中的方法 并回调观察者
     @Override
     public void getFood(String url,Observer<FoodEntity> observer) {
         HttpFoodUtils.getInstance()
@@ -28,6 +28,6 @@ class FoodModel extends BaseModel implements IContract.IFoodModel {
 
     @Override
     public void destroy() {
-
+        //销毁方法
     }
 }

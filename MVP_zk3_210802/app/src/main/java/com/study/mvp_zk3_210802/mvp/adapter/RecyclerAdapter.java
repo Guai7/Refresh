@@ -11,9 +11,11 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
+//继承多布局万能适配器
 public
 class RecyclerAdapter extends BaseMultiItemQuickAdapter<FoodEntity.DataBean, BaseViewHolder> {
 
+    //构造方法
     public RecyclerAdapter(@Nullable List<FoodEntity.DataBean> data) {
         super(data);
         addItemType(0, R.layout.item_layout);
@@ -21,7 +23,9 @@ class RecyclerAdapter extends BaseMultiItemQuickAdapter<FoodEntity.DataBean, Bas
 
     @Override
     protected void convert(@NotNull BaseViewHolder baseViewHolder, FoodEntity.DataBean dataBean) {
+        //适配数据
         baseViewHolder.setText(R.id.item_text,dataBean.getTitle());
+        //适配图片
         GlideUtils.getInstance().glide(getContext(),dataBean.getPic(),baseViewHolder.getView(R.id.item_img));
     }
 }

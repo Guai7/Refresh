@@ -8,8 +8,14 @@ import com.study.mybase.presenter.BasePresenter;
 import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
 
+/**
+ * P层
+ */
 public
 class FoodPresenter extends BasePresenter<IContract.IFoodView, IContract.IFoodModel> {
+
+    private Disposable disposable;
+
     public FoodPresenter(IContract.IFoodView view, IContract.IFoodModel model) {
         super(view, model);
     }
@@ -18,7 +24,7 @@ class FoodPresenter extends BasePresenter<IContract.IFoodView, IContract.IFoodMo
         model.getFood(url, new Observer<FoodEntity>() {
             @Override
             public void onSubscribe(Disposable d) {
-
+                disposable = d;     //设为全局
             }
 
             @Override
@@ -29,11 +35,12 @@ class FoodPresenter extends BasePresenter<IContract.IFoodView, IContract.IFoodMo
             @Override
             public void onError( Throwable e) {
                 ToastUtils.showShort(e.getMessage().toString());
+                disposable.dispose();       //遇到错误后 杀死d 断开M层和V层的连接 防止内存泄漏
             }
 
             @Override
             public void onComplete() {
-
+                disposable.dispose();       //方法执行完毕后 断开连接
             }
         });
     }
