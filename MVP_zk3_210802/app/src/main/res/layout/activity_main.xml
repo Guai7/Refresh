@@ -8,6 +8,11 @@
     tools:context=".mvp.view.MainActivity">
 
     <com.scwang.smart.refresh.header.ClassicsHeader
+        app:srlTextFinish="刷新完成"
+        app:srlTextRefreshing="正在刷新"
+        app:srlTextRelease="释放开始刷新"
+        app:srlTextPulling="下拉拉刷新"
+        android:id="@+id/main_refresh_head"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 
@@ -17,6 +22,12 @@
         android:layout_height="match_parent"/>
 
     <com.scwang.smart.refresh.footer.ClassicsFooter
+        app:srlTextPulling="上拉加载"
+        app:srlTextFinish="加载完成"
+        app:srlTextRelease="释放开始加载"
+        app:srlTextLoading="正在加载"
+        app:srlTextNothing="没有更多数据"
+        android:id="@+id/main_refresh_foot"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 

@@ -15,6 +15,7 @@ class BaseActivity extends AppCompatActivity implements IActivity,IView {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(bindLayout());   //这里调用获取视图方法 用于设置主视图
+        getSupportActionBar().hide();
 
         //初始化视图
         initView();

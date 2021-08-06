@@ -40,7 +40,7 @@ class GlideUtils {
      */
     public void glide(Context context, String url, ImageView view){
         //判断网络是否可用
-        if (NetworkUtils.isAvailableByPing()){
+//        if (NetworkUtils.isAvailableByPing()){
             Glide.with(context)
                     .load(url)
 //                    .skipMemoryCache(true)      //禁用内存缓存
@@ -49,14 +49,14 @@ class GlideUtils {
 //                    .placeholder(R.drawable.ic_launcher_background)
                     .transform(new RoundedCorners(50))
                     .into(view);
-        }else {
-            Glide.with(context)
-                    .load(url)
-                    .onlyRetrieveFromCache(true)    //仅从缓存内加载图片
-                    .error(R.drawable.ic_launcher_background)
-                    .placeholder(R.drawable.ic_launcher_background)
-                    .into(view);
-        }
+//        }else {
+//            Glide.with(context)
+//                    .load(url)
+//                    .onlyRetrieveFromCache(true)    //仅从缓存内加载图片
+//                    .error(R.drawable.ic_launcher_background)
+//                    .placeholder(R.drawable.ic_launcher_background)
+//                    .into(view);
+//        }
     }
 
 

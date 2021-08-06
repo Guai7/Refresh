@@ -52,6 +52,14 @@ class FoodEntity {
         private String food_str;
         private int num;
 
+        public DataBean() {
+        }
+
+        public DataBean(String title, String pic) {
+            this.title = title;
+            this.pic = pic;
+        }
+
         public String getId() {
             return id;
         }
