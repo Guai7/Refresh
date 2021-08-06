@@ -1,7 +1,6 @@
 package com.study.mvp_zk3_210802.mvp.view;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
 import android.annotation.SuppressLint;
@@ -12,8 +11,6 @@ import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
-import android.os.Bundle;
-import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -26,8 +23,6 @@ import com.alibaba.android.arouter.launcher.ARouter;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.OnItemClickListener;
 import com.chad.library.adapter.base.listener.OnItemLongClickListener;
-import com.scwang.smart.refresh.footer.ClassicsFooter;
-import com.scwang.smart.refresh.header.ClassicsHeader;
 import com.scwang.smart.refresh.layout.api.RefreshLayout;
 import com.scwang.smart.refresh.layout.constant.SpinnerStyle;
 import com.scwang.smart.refresh.layout.listener.OnRefreshListener;
@@ -57,7 +52,7 @@ public class MainActivity extends BaseActivity implements IContract.IFoodView, O
     private FoodPresenter foodPresenter;
 
     //页码和数量（用于分页 改变Url中的参数）
-    private int page = 1,count = 20;
+    private int page = 1;
     //是否用于刷新
     private boolean isRefresh = false;
     //整合的数据（当前适配器内可视化数据）
@@ -136,7 +131,7 @@ public class MainActivity extends BaseActivity implements IContract.IFoodView, O
         if (one){
             //第一次运行，网络获取数据
             Toast.makeText(this, "第一次运行，网络获取数据", Toast.LENGTH_SHORT).show();
-            foodPresenter.getFood("dish_list.php?stage_id=1&limit="+count+"&page="+page);
+            foodPresenter.getFood("dish_list.php?stage_id=1&limit="+20+"&page="+page);
 
             //获取sp的编写模式
             SharedPreferences.Editor edit = login.edit();
@@ -217,7 +212,7 @@ public class MainActivity extends BaseActivity implements IContract.IFoodView, O
 
     /**
      * 上拉加载更多
-     * @param refreshLayout
+     * @param refreshLayout 刷新布局
      */
     @Override
     public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
@@ -228,7 +223,7 @@ public class MainActivity extends BaseActivity implements IContract.IFoodView, O
             //页码+1
             ++page;
             //并获取数据
-            foodPresenter.getFood("dish_list.php?stage_id=1&limit="+count+"&page="+page);
+            foodPresenter.getFood("dish_list.php?stage_id=1&limit="+20+"&page="+page);
         }else {
            mainRefreshFoot.setNoMoreData(true);
         }
@@ -236,7 +231,7 @@ public class MainActivity extends BaseActivity implements IContract.IFoodView, O
 
     /**
      * 下拉刷新
-     * @param refreshLayout
+     * @param refreshLayout 刷新布局
      */
     @Override
     public void onRefresh(@NonNull RefreshLayout refreshLayout) {
@@ -246,7 +241,7 @@ public class MainActivity extends BaseActivity implements IContract.IFoodView, O
         //页码=1（重新开头）
         page = 1;
         //获取数据
-        foodPresenter.getFood("dish_list.php?stage_id=1&limit="+count+"&page="+page);
+        foodPresenter.getFood("dish_list.php?stage_id=1&limit="+20+"&page="+page);
     }
 
     /**
@@ -308,9 +303,9 @@ public class MainActivity extends BaseActivity implements IContract.IFoodView, O
 
     /**
      * 条目点击事件
-     * @param adapter
-     * @param view
-     * @param position
+     * @param adapter 适配器
+     * @param view 当前视图
+     * @param position 位置（下标）
      */
     @Override
     public void onItemClick(@NonNull @NotNull BaseQuickAdapter adapter, @NonNull @NotNull View view, int position) {
@@ -323,10 +318,10 @@ public class MainActivity extends BaseActivity implements IContract.IFoodView, O
 
     /**
      * 条目长按点击事件
-     * @param adapter
-     * @param view
-     * @param position
-     * @return
+     * @param adapter 适配器
+     * @param view 当前视图
+     * @param position 当前下表
+     * @return 返回true防止重复点击
      */
     @Override
     public boolean onItemLongClick(@NonNull @NotNull BaseQuickAdapter adapter, @NonNull @NotNull View view, int position) {
@@ -336,57 +331,41 @@ public class MainActivity extends BaseActivity implements IContract.IFoodView, O
         window.setWidth(ViewGroup.LayoutParams.WRAP_CONTENT);
         window.setHeight(ViewGroup.LayoutParams.WRAP_CONTENT);
 
-        View inflate = LayoutInflater.from(this).inflate(R.layout.popap_window, null);
+        @SuppressLint("InflateParams") View inflate = LayoutInflater.from(this).inflate(R.layout.popap_window,null );
         window.setContentView(inflate);
 
-        /**
-         * 遮罩效果
-         */
+
+        //遮罩效果
         WindowManager.LayoutParams attributes = getWindow().getAttributes();
         attributes.alpha = 0.5f;
         getWindow().setAttributes(attributes);
 
-        /**
-         * 确认删除
-         */
-        inflate.findViewById(R.id.window_delete_yes).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        //确认删除
+        inflate.findViewById(R.id.window_delete_yes).setOnClickListener(v -> {
 
-                dataBeans.remove(position);
-                recyclerAdapter.notifyItemRemoved(position);
-                showToast("删除成功");
+            dataBeans.remove(position);
+            recyclerAdapter.notifyItemRemoved(position);
+            showToast("删除成功");
 
-                window.dismiss();
-            }
+            window.dismiss();
         });
 
-        /**
-         * 取消
-         */
-        inflate.findViewById(R.id.window_delete_no).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                window.dismiss();
-                return;
-            }
-        });
+
+        //取消
+        inflate.findViewById(R.id.window_delete_no).setOnClickListener(v -> window.dismiss());
 
         //恢复透明度
-        window.setOnDismissListener(new PopupWindow.OnDismissListener() {
-            @Override
-            public void onDismiss() {
-                WindowManager.LayoutParams attributes = getWindow().getAttributes();
-                attributes.alpha = 1.0f;
-                getWindow().setAttributes(attributes);
-            }
+        window.setOnDismissListener(() -> {
+            WindowManager.LayoutParams attributes1 = getWindow().getAttributes();
+            attributes1.alpha = 1.0f;
+            getWindow().setAttributes(attributes1);
         });
 
         //点击外部取消
         window.setOutsideTouchable(true);
 
         //设置显示位置
-        View thisActivity = LayoutInflater.from(this).inflate(R.layout.activity_main, null);
+        @SuppressLint("InflateParams") View thisActivity = LayoutInflater.from(this).inflate(R.layout.activity_main, null);
         window.showAtLocation(thisActivity, Gravity.CENTER,0,0);
 
         return true;
